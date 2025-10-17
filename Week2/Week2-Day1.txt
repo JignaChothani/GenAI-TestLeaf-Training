@@ -1,0 +1,204 @@
+Instructions:
+
+1. Generate selenium Java code use DOM
+2. Generate code for IRCTC login flow - https://www.irctc.co.in/
+3. Verify positive and negative flow using sample login credentials
+4. Design test and handle manual captcha(if present)
+5. Verify access to dashboard after login
+
+Context:
+
+1.Simulate a real user IRCTC account login .
+
+2. After login, users should be redirected to a welcome or ticket booking page.
+
+3. Test verifies that the login form accepts user credentials as input and leads to the expected page upon successful login.
+
+
+
+Example:
+
+Online IRCTC login page -https://www.irctc.co.in/nget/train-search
+
+
+Output:
+
+1. Java selenium code only
+2. Skip explaination
+
+
+
+chatGPT response
+
+--------------------------------------------------------------------------------------------------------------------------------------------
+Selenium Java Code (IRCTC Login Test)
+--------------------------------------------------------------------------------------------------------------------------------------------
+
+package irctcLoginTest;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
+import org.testng.annotations.*;
+
+import java.time.Duration;
+
+public class IRCTCLoginTest {
+
+    WebDriver driver;
+    WebDriverWait wait;
+
+    // Sample credentials (replace with actual valid ones for real test)
+    String validUsername = "sampleUser123";
+    String validPassword = "samplePass123";
+    String invalidUsername = "invalidUser";
+    String invalidPassword = "wrongPass";
+
+    @BeforeClass
+    public void setup() {
+        System.setProperty("webdriver.chrome.driver", "C:\\drivers\\chromedriver.exe");
+        driver = new ChromeDriver();
+        wait = new WebDriverWait(driver, Duration.ofSeconds(15));
+        driver.manage().window().maximize();
+    }
+
+    @Test(priority = 1)
+    public void openIRCTCHomepage() {
+        driver.get("https://www.irctc.co.in/nget/train-search");
+        String pageTitle = driver.getTitle();
+        Assert.assertTrue(pageTitle.contains("IRCTC"), "IRCTC Home page did not load properly");
+    }
+
+    @Test(priority = 2)
+    public void loginNegativeFlow() throws InterruptedException {
+        driver.findElement(By.xpath("//a[contains(text(),'LOGIN')]")).click();
+
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("userId")));
+        driver.findElement(By.id("userId")).sendKeys(invalidUsername);
+        driver.findElement(By.id("pwd")).sendKeys(invalidPassword);
+
+        // Pause to allow manual captcha entry if present
+        handleCaptchaManually();
+
+        driver.findElement(By.xpath("//button[contains(text(),'SIGN IN')]")).click();
+
+        Thread.sleep(3000); // Wait for error message
+        WebElement error = driver.findElement(By.xpath("//span[contains(text(),'Invalid')]"));
+        Assert.assertTrue(error.isDisplayed(), "Negative flow failed: Error not displayed for invalid credentials");
+    }
+
+    @Test(priority = 3)
+    public void loginPositiveFlow() throws InterruptedException {
+        driver.navigate().refresh();
+        driver.findElement(By.xpath("//a[contains(text(),'LOGIN')]")).click();
+
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("userId")));
+        driver.findElement(By.id("userId")).sendKeys(validUsername);
+        driver.findElement(By.id("pwd")).sendKeys(validPassword);
+
+        // Pause to allow manual captcha entry if present
+        handleCaptchaManually();
+
+        driver.findElement(By.xpath("//button[contains(text(),'SIGN IN')]")).click();
+
+        // Wait for dashboard/homepage after successful login
+        Thread.sleep(7000);
+
+        // Verify redirection to dashboard or welcome page
+        String currentUrl = driver.getCurrentUrl();
+        Assert.assertTrue(currentUrl.contains("train-search") || currentUrl.contains("dashboard"),
+                "Login failed or user not redirected to dashboard.");
+    }
+
+    // Manual captcha handler - prompts user to fill captcha manually
+    private void handleCaptchaManually() throws InterruptedException {
+        System.out.println("⚠️ Please complete the CAPTCHA manually within 30 seconds...");
+        Thread.sleep(30000); // Give user time to fill captcha manually
+    }
+
+    @AfterClass
+    public void teardown() {
+        if (driver != null) {
+            driver.quit();
+        }
+    }
+}
+
+-----------------------------------------------------
+playwright typescript
+-----------------------------------------------------
+
+import { test, expect } from '@playwright/test';
+
+// Sample credentials (replace with real credentials for actual testing)
+const VALID_USERNAME = 'sampleUser123';
+const VALID_PASSWORD = 'samplePass123';
+const INVALID_USERNAME = 'invalidUser';
+const INVALID_PASSWORD = 'wrongPass';
+
+// Utility: Wait for manual captcha entry
+async function handleCaptchaManually(page) {
+  console.log('⚠️ Please solve the CAPTCHA manually within 30 seconds...');
+  await page.waitForTimeout(30000); // Wait 30 seconds
+}
+
+test.describe('IRCTC Login Flow', () => {
+
+  test.beforeEach(async ({ page }) => {
+    await page.goto('https://www.irctc.co.in/nget/train-search', { waitUntil: 'domcontentloaded' });
+    await expect(page).toHaveTitle(/IRCTC/);
+  });
+
+  test('Negative Login Flow - Invalid Credentials', async ({ page }) => {
+    // Click Login button
+    await page.locator('a:text("LOGIN")').click();
+
+    // Fill invalid credentials
+    await page.locator('#userId').fill(INVALID_USERNAME);
+    await page.locator('#pwd').fill(INVALID_PASSWORD);
+
+    // Wait for manual captcha
+    await handleCaptchaManually(page);
+
+    // Click Sign In
+    await page.locator('button:text("SIGN IN")').click();
+
+    // Wait for potential error message
+    await page.waitForTimeout(3000);
+
+    // Verify error text
+    const error = page.locator('span:has-text("Invalid")');
+    await expect(error).toBeVisible({ timeout: 10000 });
+  });
+
+  test('Positive Login Flow - Valid Credentials', async ({ page }) => {
+    // Click Login button
+    await page.locator('a:text("LOGIN")').click();
+
+    // Fill valid credentials
+    await page.locator('#userId').fill(VALID_USERNAME);
+    await page.locator('#pwd').fill(VALID_PASSWORD);
+
+    // Wait for manual captcha
+    await handleCaptchaManually(page);
+
+    // Click Sign In
+    await page.locator('button:text("SIGN IN")').click();
+
+    // Wait for page redirect
+    await page.waitForTimeout(7000);
+
+    // Verify URL contains dashboard or train search
+    const currentURL = page.url();
+    expect(currentURL).toMatch(/train-search|dashboard/);
+  });
+});
+
+
+-----------------------------------------------------------------------------------------------
+
+

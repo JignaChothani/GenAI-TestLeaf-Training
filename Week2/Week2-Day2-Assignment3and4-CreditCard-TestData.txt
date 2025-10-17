@@ -1,0 +1,59 @@
+
+
+----------------------------------------------------------------
+Request to generate Credit card Test Data
+----------------------------------------------------------------
+
+Request -
+
+{
+  "messages": [
+    {
+      "role": "system",
+      "content": "You are QA Engineer and experienced in generating and validating test data for credit cards"
+    },
+    {
+      "role": "user",
+      "content": "Generate 25 test data which are diverse for credit card application. Data should include credit score, gender,name,region,employment status,debt profile, yearly income"
+    }
+  ],
+  "model": "llama-3.3-70b-versatile",
+ //"max_tokens": 500,
+ "temperature": 0.1 // use temp between 0.1 - 0.2 at max for coding. 
+  }
+
+
+Response -
+
+{
+    "id": "chatcmpl-b5a79d98-9d37-44a0-acd5-d38541e90de8",
+    "object": "chat.completion",
+    "created": 1760688349,
+    "model": "llama-3.3-70b-versatile",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "Here are 25 diverse test data for credit card applications:\n\n1. **John Smith**\n\t* Credit Score: 750\n\t* Gender: Male\n\t* Region: New York\n\t* Employment Status: Full-time\n\t* Debt Profile: $10,000 mortgage, $2,000 credit card debt\n\t* Yearly Income: $80,000\n\n2. **Emily Chen**\n\t* Credit Score: 820\n\t* Gender: Female\n\t* Region: California\n\t* Employment Status: Part-time\n\t* Debt Profile: $5,000 student loan, $1,000 credit card debt\n\t* Yearly Income: $40,000\n\n3. **Michael Brown**\n\t* Credit Score: 680\n\t* Gender: Male\n\t* Region: Texas\n\t* Employment Status: Self-employed\n\t* Debt Profile: $20,000 business loan, $5,000 credit card debt\n\t* Yearly Income: $100,000\n\n4. **Sarah Lee**\n\t* Credit Score: 900\n\t* Gender: Female\n\t* Region: Illinois\n\t* Employment Status: Full-time\n\t* Debt Profile: $0\n\t* Yearly Income: $60,000\n\n5. **David Kim**\n\t* Credit Score: 780\n\t* Gender: Male\n\t* Region: Florida\n\t* Employment Status: Retired\n\t* Debt Profile: $10,000 mortgage, $0 credit card debt\n\t* Yearly Income: $50,000\n\n6. **Jessica Martin**\n\t* Credit Score: 720\n\t* Gender: Female\n\t* Region: Georgia\n\t* Employment Status: Full-time\n\t* Debt Profile: $15,000 car loan, $3,000 credit card debt\n\t* Yearly Income: $70,000\n\n7. **William White**\n\t* Credit Score: 850\n\t* Gender: Male\n\t* Region: Washington\n\t* Employment Status: Full-time\n\t* Debt Profile: $0\n\t* Yearly Income: $90,000\n\n8. **Olivia Thompson**\n\t* Credit Score: 700\n\t* Gender: Female\n\t* Region: North Carolina\n\t* Employment Status: Part-time\n\t* Debt Profile: $8,000 student loan, $2,000 credit card debt\n\t* Yearly Income: $30,000\n\n9. **James Davis**\n\t* Credit Score: 760\n\t* Gender: Male\n\t* Region: Michigan\n\t* Employment Status: Full-time\n\t* Debt Profile: $12,000 mortgage, $4,000 credit card debt\n\t* Yearly Income: $65,000\n\n10. **Ava Patel**\n\t* Credit Score: 880\n\t* Gender: Female\n\t* Region: New Jersey\n\t* Employment Status: Full-time\n\t* Debt Profile: $0\n\t* Yearly Income: $85,000\n\n11. **Ethan Hall**\n\t* Credit Score: 740\n\t* Gender: Male\n\t* Region: Virginia\n\t* Employment Status: Self-employed\n\t* Debt Profile: $15,000 business loan, $6,000 credit card debt\n\t* Yearly Income: $110,000\n\n12. **Lily Tran**\n\t* Credit Score: 800\n\t* Gender: Female\n\t* Region: Massachusetts\n\t* Employment Status: Full-time\n\t* Debt Profile: $8,000 car loan, $1,000 credit card debt\n\t* Yearly Income: $75,000\n\n13. **Noah Brooks**\n\t* Credit Score: 690\n\t* Gender: Male\n\t* Region: Arizona\n\t* Employment Status: Part-time\n\t* Debt Profile: $10,000 student loan, $3,000 credit card debt\n\t* Yearly Income: $35,000\n\n14. **Sophia Rodriguez**\n\t* Credit Score: 910\n\t* Gender: Female\n\t* Region: Colorado\n\t* Employment Status: Full-time\n\t* Debt Profile: $0\n\t* Yearly Income: $95,000\n\n15. **Alexander Lewis**\n\t* Credit Score: 770\n\t* Gender: Male\n\t* Region: Tennessee\n\t* Employment Status: Full-time\n\t* Debt Profile: $12,000 mortgage, $5,000 credit card debt\n\t* Yearly Income: $80,000\n\n16. **Mia Garcia**\n\t* Credit Score: 790\n\t* Gender: Female\n\t* Region: Indiana\n\t* Employment Status: Part-time\n\t* Debt Profile: $6,000 car loan, $2,000 credit card debt\n\t* Yearly Income: $40,000\n\n17. **Benjamin Russell**\n\t* Credit Score: 860\n\t* Gender: Male\n\t* Region: Minnesota\n\t* Employment Status: Full-time\n\t* Debt Profile: $0\n\t* Yearly Income: $100,000\n\n18. **Isabella Taylor**\n\t* Credit Score: 730\n\t* Gender: Female\n\t* Region: Ohio\n\t* Employment Status: Full-time\n\t* Debt Profile: $10,000 mortgage, $4,000 credit card debt\n\t* Yearly Income: $65,000\n\n19. **Caleb Walker**\n\t* Credit Score: 780\n\t* Gender: Male\n\t* Region: Wisconsin\n\t* Employment Status: Self-employed\n\t* Debt Profile: $18,000 business loan, $7,000 credit card debt\n\t* Yearly Income: $120,000\n\n20. **Charlotte Brown**\n\t* Credit Score: 920\n\t* Gender: Female\n\t* Region: Oregon\n\t* Employment Status: Full-time\n\t* Debt Profile: $0\n\t* Yearly Income: $105,000\n\n21. **Julian Sanchez**\n\t* Credit Score: 750\n\t* Gender: Male\n\t* Region: Nevada\n\t* Employment Status: Part-time\n\t* Debt Profile: $12,000 student loan, $4,000 credit card debt\n\t* Yearly Income: $45,000\n\n22. **Abigail Martin**\n\t* Credit Score: 840\n\t* Gender: Female\n\t* Region: Utah\n\t* Employment Status: Full-time\n\t* Debt Profile: $8,000 car loan, $3,000 credit card debt\n\t* Yearly Income: $85,000\n\n23. **Logan Lee**\n\t* Credit Score: 760\n\t* Gender: Male\n\t* Region: Oklahoma\n\t* Employment Status: Full-time\n\t* Debt Profile: $15,000 mortgage, $6,000 credit card debt\n\t* Yearly Income: $70,000\n\n24. **Harper White**\n\t* Credit Score: 900\n\t* Gender: Female\n\t* Region: Connecticut\n\t* Employment Status: Full-time\n\t* Debt Profile: $0\n\t* Yearly Income: $110,000\n\n25. **Elijah Kim**\n\t* Credit Score: 820\n\t* Gender: Male\n\t* Region: Iowa\n\t* Employment Status: Self-employed\n\t* Debt Profile: $20,000 business loan, $8,000 credit card debt\n\t* Yearly Income: $130,000\n\nThese test data cover a range of credit scores, employment statuses, debt profiles, and yearly incomes, and are diverse in terms of region and gender."
+            },
+            "logprobs": null,
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "queue_time": 0.053281596,
+        "prompt_tokens": 83,
+        "prompt_time": 0.004497604,
+        "completion_tokens": 1594,
+        "completion_time": 2.823488676,
+        "total_tokens": 1677,
+        "total_time": 2.82798628
+    },
+    "usage_breakdown": null,
+    "system_fingerprint": "fp_34d416ee39",
+    "x_groq": {
+        "id": "req_01k7rk85kjezkbbf5sj1pj96hm"
+    },
+    "service_tier": "on_demand"
+}

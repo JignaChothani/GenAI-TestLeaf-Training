@@ -1,0 +1,122 @@
+API through postman
+
+-------------------------------------------
+Prompt to LLM
+-------------------------------------------
+
+
+
+Request -
+
+{
+  "model": "openai/gpt-oss-20b",
+  "messages": [
+    {
+      "role": "user",
+      "content": "You are manual tester and generate non functional test cases, Create non functional testcases for amazon order online functionality Create 10 testcases which [SHOULD] include positive, negative and edge/boundary cases"
+    },
+    {
+      "role": "system",
+      "content":"Background is order online functionality"
+    }
+  ]
+}
+
+
+Response-
+
+{
+    "id": "chatcmpl-0a979ea4-4b8c-4eb9-8063-c84fecfae027",
+    "object": "chat.completion",
+    "created": 1760686155,
+    "model": "openai/gpt-oss-20b",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "**Non‑Functional Test Suite – Amazon “Order Online” Flow**  \n*(Covering Performance, Security, Usability, Reliability, Accessibility, Compatibility & Data‑Integrity – with positive, negative, and edge/boundary scenarios)*  \n\n| # | TC_ID | Test Type | Objective | Preconditions | Test Data / Scenario | Steps | Expected Result | Pass/Fail Criteria |\n|---|-------|-----------|-----------|---------------|----------------------|-------|-----------------|--------------------|\n| 1 | **NFT‑01** | **Performance – Load** | Verify that the *Checkout* page can handle **10 000 concurrent users** without degradation. | - Amazon web‑site is live<br>- Load‑testing tool (e.g., JMeter) is configured | 10 000 virtual users each performing: <br>• Search & add 1 item to cart <br>• Proceed to checkout<br>• Submit order with dummy data | 1. Start 10 000 VUs<br>2. Each VU repeats the sequence 3 times<br>3. Monitor response times and error rate | <br>• Avg response time ≤ 3 s for all requests<br>• No more than 1 % error rate | **PASS** if criteria met |\n| 2 | **NFT‑02** | **Performance – Response Time** | Check that the *Order Confirmation* page loads within **2 s** for a typical single‑item order. | - User logged in<br>- Item in cart | 1. Add a single product (₹ 499) to cart<br>2. Click “Proceed to checkout”<br>3. Enter valid payment & shipping data | Order Confirmation page should display within ≤ 2 s and show correct order details | **PASS** if response time ≤ 2 s |\n| 3 | **NFT‑03** | **Security – Input Validation (Negative)** | Ensure the system rejects **SQL‑Injection** strings entered into the *search* field. | - Browser open to Amazon homepage | Search field input: `'; DROP TABLE orders; --` | 1. Enter string into search box<br>2. Click search | No query execution – search results page shows a normal “no results found” page; database remains intact | **PASS** if no data loss or error |\n| 4 | **NFT‑04** | **Security – CSRF Protection** | Verify that an order cannot be submitted without a valid CSRF token (negative). | - Logged‑in user has a valid session | 1. Open DevTools, remove the hidden `csrf_token` field from the checkout form<br>2. Submit the form | Server rejects the request with HTTP 403 (Forbidden) and shows “Invalid request” message | **PASS** if 403 returned |\n| 5 | **NFT‑05** | **Usability – Empty‑Cart Checkout (Negative)** | Confirm that the system blocks checkout when the cart is empty. | - User logged in | 1. Ensure cart is empty<br>2. Click “Proceed to checkout” | System shows a user‑friendly error: “Your cart is empty. Add items before checkout.” | **PASS** if error shown and no navigation to payment screen |\n| 6 | **NFT‑06** | **Accessibility – Keyboard Navigation** | Verify that a user can add an item to cart and reach checkout using only the keyboard (positive). | - Browser with focus outline visible | 1. Tab to search field, type “wireless mouse”, press Enter<br>2. Tab to product title, press Enter to view details<br>3. Tab to “Add to Cart” button, press Enter<br>4. Tab to “Proceed to Checkout” button, press Enter | All actions complete and order flow continues; focus outline indicates current element | **PASS** if all steps succeed via keyboard |\n| 7 | **NFT‑07** | **Reliability – Network Failure Retry (Positive)** | Verify that an order can be successfully retried after a transient network drop during payment. | - User logged in, item in cart | 1. Initiate payment<br>2. Simulate network drop (e.g., disable Wi‑Fi) before confirmation<br>3. Restore network and press “Retry” | Order completes successfully; confirmation page shows correct order ID | **PASS** if order processes after retry |\n| 8 | **NFT‑08** | **Data Integrity – Price Calculation (Positive)** | Ensure total displayed equals sum of item prices + shipping + taxes. | - Cart contains multiple items with known prices | 1. Add 3 items: ₹200, ₹350, ₹450<br>2. Proceed to checkout<br>3. Note item subtotal, shipping, tax, and grand total | Grand total = ₹200+₹350+₹450 + shipping + tax (calculated correctly) | **PASS** if calculated correctly |\n| 9 | **NFT‑09** | **Compatibility – Browser Support (Edge)** | Test the order flow on legacy browsers (e.g., IE 11). | - Access via IE 11 (or emulator) | 1. Search for “USB cable”<br>2. Add to cart<br>3. Proceed to checkout with valid details | Flow completes without JavaScript errors; UI renders properly | **PASS** if no critical failures |\n|10 | **NFT‑10** | **Edge/Boundary – Max Quantity** | Verify system handles the maximum allowable quantity per item (e.g., 100). | - User logged in | 1. Search for a product that allows up to 100 units<br>2. Set quantity to 100<br>3. Add to cart and checkout | System accepts quantity 100, cart updates correctly, and order is processed | **PASS** if quantity accepted and order succeeds |\n\n---\n\n### Notes\n\n- **Positive** cases (e.g., #1, #2, #5, #6, #7, #8, #10) confirm expected behaviour under normal conditions.  \n- **Negative** cases (e.g., #3, #4, #5) test the system’s resilience against invalid input or malicious attempts.  \n- **Edge/Boundary** cases (e.g., #1, #10) probe the limits of the system to uncover performance bottlenecks or logical errors.  \n\nThese test cases collectively validate that Amazon’s online ordering process is robust, secure, and user‑friendly under a wide range of conditions.",
+                "reasoning": "We need to create non-functional test cases for Amazon order online functionality. Non-functional tests: performance, security, usability, reliability, compatibility, accessibility, etc. Should include positive, negative, edge/boundary cases. 10 test cases. Provide test case ID, description, preconditions, steps, expected results, test data. Must include positive, negative, edge/boundary. Provide variety: performance load, response time, concurrency, security (SQL injection, XSS, CSRF), accessibility (keyboard navigation, screen reader), mobile responsiveness, data validation, etc.\n\nWe should make test cases for Amazon order online. Let's think about categories:\n\n1. Performance: Load test to check checkout page response under high traffic.\n\n2. Response time: Ensure order confirmation page loads within acceptable time.\n\n3. Security: Input validation - negative test for SQL injection on search bar or checkout form.\n\n4. Security: CSRF token validation on order submission.\n\n5. Accessibility: Keyboard navigation to add item to cart and checkout.\n\n6. Usability: Verify that error message appears when trying to checkout with empty cart.\n\n7. Reliability: Verify order can be retried after a network failure.\n\n8. Data integrity: Verify that the total price displayed matches sum of item prices and shipping.\n\n9. Compatibility: Test order flow on different browsers.\n\n10. Edge: Test with extremely large quantity of item.\n\nWe need positive, negative, edge/boundary. Let's allocate.\n\nPositive: normal order flow.\n\nNegative: invalid input, missing data, unauthorized access.\n\nEdge/boundary: max quantity, load test.\n\nWe need at least 10 test cases, each including positive/negative/edge? Not all need all types. The requirement: create 10 test cases which SHOULD include positive, negative and edge/boundary cases. That implies the set should cover those categories. So include some positive, negative, edge.\n\nLet's produce test case format:\n\nTC_ID, Test Objective, Preconditions, Test Data, Steps, Expected Result, Test Type (Non-functional, e.g., performance, security, etc.)\n\nLet's produce 10 test cases.\n\nLet's write in clear form.\n\nMake sure to mention test types: Performance, Security, Usability, Reliability, Accessibility.\n\nOk.\n\nLet's produce."
+            },
+            "logprobs": null,
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "queue_time": 0.045377357,
+        "prompt_tokens": 121,
+        "prompt_time": 0.006909039,
+        "completion_tokens": 1819,
+        "completion_time": 1.85976424,
+        "total_tokens": 1940,
+        "total_time": 1.866673279
+    },
+    "usage_breakdown": null,
+    "system_fingerprint": "fp_c5a89987dc",
+    "x_groq": {
+        "id": "req_01k7rh57k9ee085qc0hj2vzrsh"
+    },
+    "service_tier": "on_demand"
+}
+
+
+
+----------------------------------------
+
+Multilingual
+------------------------------------
+
+Request -
+
+{
+  "model": "llama-3.3-70b-versatile",
+  "messages": [
+    {
+      "role": "system",
+      "content": "You are a professional translator."
+    },
+    {
+      "role": "user",
+      "content": "Translate the following test instructions into gujrati: 'Open the application, enter the credentials, and click on the login button.'"
+    }
+  ],
+  "temperature": 0.3,
+  "max_tokens": 100
+}
+
+
+Response-
+
+{
+    "id": "chatcmpl-2b62964a-6531-4380-b72c-ed736b7432d7",
+    "object": "chat.completion",
+    "created": 1760687290,
+    "model": "llama-3.3-70b-versatile",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": "એપ્લિકેશન ખોલો, તમારા લોગિન વિગતો દાખલ કરો અને લોગિન બટન પર ક"
+            },
+            "logprobs": null,
+            "finish_reason": "length"
+        }
+    ],
+    "usage": {
+        "queue_time": 0.060082975,
+        "prompt_tokens": 67,
+        "prompt_time": 0.003452114,
+        "completion_tokens": 100,
+        "completion_time": 0.237751428,
+        "total_tokens": 167,
+        "total_time": 0.241203542
+    },
+    "usage_breakdown": null,
+    "system_fingerprint": "fp_155ab82e98",
+    "x_groq": {
+        "id": "req_01k7rj7y2te9hvrd7j6mhgrwsm"
+    },
+    "service_tier": "on_demand"
+}
+

@@ -1,0 +1,35 @@
+Instructions:
+
+Create non functional testcases for amazon order online functionality 
+Create 10 testcases which [SHOULD] include positive, negative and edge/boundary cases
+Testcase should contain all the fields as per the best practise
+
+Context:
+Background is order online functionality
+
+Persona:
+
+You are an AI assistant expert in Manual testing with non functional background
+
+
+
+
+-------------------------------------------------------------------------------
+
+TC ID	Test Case Title	Objective / Description	Test Type	Pre-Conditions	Test Steps	Expected Result	Pass/Fail Criteria	Remarks
+NFR_001	Verify order placement performance under normal load	To verify that an order can be successfully placed within the acceptable time under normal user load	Performance (Response Time)	User is logged in; item available in stock	1. Search for a product2. Add to cart3. Proceed to checkout4. Place order	Order confirmation page loads within 5 seconds	Page load time ≤ 5 sec; order confirmed successfully	Positive case; baseline metric
+NFR_002	Validate order process under heavy concurrent load	To check system behavior when thousands of users place orders simultaneously	Load / Stress	Load testing tool configured (e.g., JMeter)	Simulate 10,000 concurrent users performing order placement	System remains responsive; no timeout or crash	Error rate ≤ 2%; 95% transactions successful	Stress/edge scenario
+NFR_003	Verify order persistence after session timeout	To check data consistency if session expires during order process	Reliability / Recovery	User logged in; checkout in progress	Let session idle until timeout (e.g., 15 min)	System prompts re-login; cart data retained	Cart items and order details retained post-login	Boundary/recovery case
+NFR_004	Verify order completion after payment failure	Ensure system handles failed payment without data loss	Reliability / Error Handling	Valid user; valid product; simulate payment failure	Attempt to pay with invalid card	Order not created; user sees clear error	No duplicate order; clear retry option shown	Negative case
+NFR_005	Validate system behavior with large order quantity	To check upper limit of items in one order	Performance / Boundary	User logged in	Add maximum allowable items (e.g., 999 units) to cart and order	System processes correctly without crash	Order placed successfully or proper limit message	Edge case test
+NFR_006	Verify site usability during order placement	To ensure user experience is intuitive and consistent	Usability	User with normal access	Go through the order process and observe layout, buttons, and flow	Pages are visually consistent and all buttons functional	No broken UI elements; all labels clear	Positive usability test
+NFR_007	Verify order functionality across browsers and devices	To ensure consistent ordering experience on all platforms	Compatibility	Devices: mobile, tablet, desktop; browsers: Chrome, Safari, Firefox, Edge	Perform same order on each device/browser	Order completes successfully on all	100% functional parity across platforms	Cross-browser/device test
+NFR_008	Validate system security during order and payment	Ensure sensitive data (card info, address) are encrypted	Security	HTTPS enabled; payment gateway integrated	Place order with card payment	Data encrypted (TLS 1.2+); no plain text logs	Secure transaction and no leakage	Positive security test
+NFR_009	Verify error message consistency and localization	To check if all error messages during order are readable and localized	Usability / Localization	Application language set (e.g., Japanese or English)	Trigger invalid order (e.g., out-of-stock item)	Clear, localized error message shown	Error messages consistent and localized	Negative usability test
+NFR_010	Verify system endurance during continuous order activity	To ensure system stability during long continuous use	Endurance / Reliability	Test environment configured	Place continuous orders for 12 hours	No memory leaks; consistent performance	No crash or degradation over time	Endurance/long-run test
+
+
+
+
+
+
